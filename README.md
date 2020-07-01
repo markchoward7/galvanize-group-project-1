@@ -4,9 +4,17 @@ AF Fitness Tracker App
 
 Uses nginx as a reverse proxy to serve up 5 full stack components developed by the team.
 
-Set up your sql seed data in the init.sql file.
+PLEASE READ BEFORE STARTING
 
-Use `docker-compose up --build` to build and run the images.
+Docker-compose has a 10 concurrent container limit by default. To change this limit use the following command `export COMPOSE_PARALLEL_LIMIT=1000`. For Docker Toolbox users, enter this command in the Docker terminal. I'm unsure where Docker Desktop users do this, I would try a basic terminal. We can troubleshoot if that doesn't work.
+
+After that, due to the size of the compose, you will want to separate your build and run commands. So use `docker-compose build` to build the images.
+
+Once that is done, use `docker-compose up` to run the containers. If you get a timeout error on some or many of the containers, no worries. Just run the up command again.
+
+Other things of note...
+
+Set up your sql seed data in the init.sql file.
 
 Changes to your node dependencies or to the seed data will likely require a rebuild to take effect. In addition, will likely require dropping volumes first.
 
