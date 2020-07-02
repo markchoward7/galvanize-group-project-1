@@ -24,7 +24,7 @@ services:
         expose:
             - 3000
         environment:
-            - CHOKDIAR_USEPOLLING=true
+            - CHOKIDAR_USEPOLLING=true
         networks:
             - sso
         stdin_open: true
