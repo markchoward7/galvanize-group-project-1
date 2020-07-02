@@ -2,7 +2,7 @@ version: '3'
 
 services:
     nginx:
-        container_name: nginx
+        container_name: fitness_app_nginx
         build: ./nginx
         ports:
             - 80:80
@@ -16,7 +16,7 @@ services:
             - component5
 
     sso_frontend:
-        container_name: sso_frontend
+        container_name: fitness_app_sso_frontend
         build: ./sso/frontend
         volumes:
             - ./sso/frontend:/usr/src/app
@@ -30,14 +30,14 @@ services:
         stdin_open: true
         tty: true
     
-    sso:
-        container_name: sso
+    sso_backend:
+        container_name: fitness_app_sso_backend
         build: ./sso/backend
         volumes:
             - ./sso/backend:/usr/src/app
             - sso_backend_node_modules:/usr/src/app/node_modules
         expose: 
-            - 8000
+            - 3001
         depends_on:
             - sso_database
         networks:
@@ -46,7 +46,7 @@ services:
         tty: true
 
     sso_database:
-        container_name: sso_database
+        container_name: fitness_app_sso_database
         build: ./sso/database
         volumes:
             - sso_postgres_data:/var/lib/postgresql/data
@@ -58,7 +58,7 @@ services:
             - sso
 
     comp1_frontend:
-        container_name: comp1_frontend
+        container_name: fitness_app_comp1_frontend
         build: ./component1/frontend
         volumes:
             - ./component1/frontend:/usr/src/app
@@ -73,13 +73,13 @@ services:
         tty: true
     
     comp1_backend:
-        container_name: comp1_backend
+        container_name: fitness_app_comp1_backend
         build: ./component1/backend
         volumes: 
             - ./component1/backend:/usr/src/app
             - comp1_backend_node_modules:/usr/src/app/node_modules
         expose: 
-            - 8000
+            - 3001
         depends_on:
             - comp1_database
         networks:
@@ -89,7 +89,7 @@ services:
         tty: true
 
     comp1_database:
-        container_name: comp1_database
+        container_name: fitness_app_comp1_database
         build: ./component1/database
         volumes:
             - component1_postgres_data:/var/lib/postgresql/data
@@ -101,7 +101,7 @@ services:
             - component1
 
     comp2_frontend:
-        container_name: comp2_frontend
+        container_name: fitness_app_comp2_frontend
         build: ./component2/frontend
         volumes:
             - ./component2/frontend:/usr/src/app
@@ -116,13 +116,13 @@ services:
         tty: true
     
     comp2_backend:
-        container_name: comp2_backend
+        container_name: fitness_app_comp2_backend
         build: ./component2/backend
         volumes: 
             - ./component2/backend:/usr/src/app
             - comp2_backend_node_modules:/usr/src/app/node_modules
         expose: 
-            - 8000
+            - 3001
         depends_on:
             - comp2_database
         networks:
@@ -132,7 +132,7 @@ services:
         tty: true
 
     comp2_database:
-        container_name: comp2_database
+        container_name: fitness_app_comp2_database
         build: ./component2/database
         volumes:
             - component2_postgres_data:/var/lib/postgresql/data
@@ -144,7 +144,7 @@ services:
             - component2
 
     comp3_frontend:
-        container_name: comp3_frontend
+        container_name: fitness_app_comp3_frontend
         build: ./component3/frontend
         volumes:
             - ./component3/frontend:/usr/src/app
@@ -159,13 +159,13 @@ services:
         tty: true
     
     comp3_backend:
-        container_name: comp3_backend
+        container_name: fitness_app_comp3_backend
         build: ./component3/backend
         volumes: 
             - ./component3/backend:/usr/src/app
             - comp3_backend_node_modules:/usr/src/app/node_modules
         expose: 
-            - 8000
+            - 3001
         depends_on:
             - comp3_database
         networks:
@@ -175,7 +175,7 @@ services:
         tty: true
 
     comp3_database:
-        container_name: comp3_database
+        container_name: fitness_app_comp3_database
         build: ./component3/database
         volumes:
             - component3_postgres_data:/var/lib/postgresql/data
@@ -187,7 +187,7 @@ services:
             - component3
 
     comp4_frontend:
-        container_name: comp4_frontend
+        container_name: fitness_app_comp4_frontend
         build: ./component4/frontend
         volumes:
             - ./component4/frontend:/usr/src/app
@@ -202,13 +202,13 @@ services:
         tty: true
     
     comp4_backend:
-        container_name: comp4_backend
+        container_name: fitness_app_comp4_backend
         build: ./component4/backend
         volumes: 
             - ./component4/backend:/usr/src/app
             - comp4_backend_node_modules:/usr/src/app/node_modules
         expose: 
-            - 8000
+            - 3001
         depends_on:
             - comp4_database
         networks:
@@ -218,7 +218,7 @@ services:
         tty: true
 
     comp4_database:
-        container_name: comp4_database
+        container_name: fitness_app_comp4_database
         build: ./component4/database
         volumes:
             - component4_postgres_data:/var/lib/postgresql/data
@@ -230,7 +230,7 @@ services:
             - component4
 
     comp5_frontend:
-        container_name: comp5_frontend
+        container_name: fitness_app_comp5_frontend
         build: ./component5/frontend
         volumes:
             - ./component5/frontend:/usr/src/app
@@ -245,13 +245,13 @@ services:
         tty: true
     
     comp5_backend:
-        container_name: comp5_backend
+        container_name: fitness_app_comp5_backend
         build: ./component5/backend
         volumes: 
             - ./component5/backend:/usr/src/app
             - comp5_backend_node_modules:/usr/src/app/node_modules
         expose: 
-            - 8000
+            - 3001
         depends_on:
             - comp5_database
         networks:
@@ -261,7 +261,7 @@ services:
         tty: true
 
     comp5_database:
-        container_name: comp5_database
+        container_name: fitness_app_comp5_database
         build: ./component5/database
         volumes:
             - component5_postgres_data:/var/lib/postgresql/data
@@ -294,8 +294,14 @@ volumes:
 
 networks:
     sso:
+        driver: bridge
     component1:
+        driver: bridge
     component2:
+        driver: bridge
     component3:
+        driver: bridge
     component4:
+        driver: bridge
     component5:
+        driver: bridge
