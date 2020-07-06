@@ -22,6 +22,8 @@ Use `docker-compose down -v` to drop your volumes. Note that this removes all da
 
 Mac users may get a permissions error relating to the entrypoint.sh files. You will need to use the following command for each one `chmod +x entrypoint.sh`. I'll leave it up to you to see if there is a way to do it to all at once.
 
+Mac/Linux Permissions Mod - `find $(pwd)/ -name entrypoint.sh -print -exec chmod +x {} \;`
+
 Look at the nginx.conf file if unsure about your component's URL path. The location entry that has your docker container name is the path.
 
 When connecting your backend to your database, look at the environment variables in the docker-compose file to see what your username/password are. The host will be the container name.
