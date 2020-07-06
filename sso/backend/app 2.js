@@ -1,9 +1,12 @@
 const express = require('express')
+const cors = require('cors')
 
 const app = express()
 
-app.get('/comp3/api', (req, res) => {
-    res.send("component 3 backend")
+app.use(cors())
+
+app.get('/api', (req, res) => {
+    res.send("sso backend")
 }) 
 
 const port = 3001
