@@ -11,11 +11,11 @@ import {
   Route,
   Link,
   Redirect,
-  useLocation,
 } from 'react-router-dom'
 
 import Login from './Login'
 import Example from './Example'
+import Sidebar from './Sidebar'
 
 const axios = require('axios').default
 axios.defaults.headers.post['Content-Type'] = 'application/json'
@@ -33,11 +33,14 @@ function App() {
 
   return (
     <Router><div className="App">
+      <Sidebar parentState={state} parentSetState={setState}/>
       {state.isRedirecting ? <Redirect to='/login'/> : ''}
-      <Switch>
-        <Route exact path='/login' render={props => <Login {...props} parentState={state} parentSetState={setState} />} />
-        <Route exact path='/example' render={props => <Example {...props} parentState={state} parentSetState={setState} />} />
-      </Switch>
+      <div className="main">
+        <Switch>
+          <Route exact path='/login' render={props => <Login {...props} parentState={state} parentSetState={setState} />} />
+          <Route exact path='/example' render={props => <Example {...props} parentState={state} parentSetState={setState} />} />
+        </Switch>
+      </div>
     </div></Router>
   )
 }

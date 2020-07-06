@@ -2,7 +2,7 @@ CREATE TABLE organizations
 (
     id serial primary key,
     abbreviation VARCHAR(255) NOT NULL,
-    name VARCHAR(255) NOT NULL,
+    name VARCHAR(255) NOT NULL UNIQUE,
     belongsTo integer references organizations(id)
 );
 CREATE TABLE users
@@ -11,10 +11,10 @@ CREATE TABLE users
     grade VARCHAR(10) NOT NULL,
     firstName VARCHAR(255) NOT NULL,
     lastName VARCHAR(255) NOT NULL,
-    username VARCHAR(255) NOT NULL,
+    username VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
     organization integer references organizations(id) NOT NULL,
-    edipi integer
+    edipi integer UNIQUE
 );
 
 insert into organizations (abbreviation, name) VALUES ('USAF', 'United States Air Force');
@@ -44,4 +44,4 @@ insert into organizations (abbreviation, name, belongsTo) VALUES ('7AF', 'Sevent
 insert into organizations (abbreviation, name, belongsTo) VALUES ('11AF', 'Eleventh Air Force', 9);
 insert into organizations (abbreviation, name, belongsTo) VALUES ('3AF', 'Third Air Force', 10);
 
-insert into users (grade, firstName, lastName, username, password, organization) VALUES ('N/A', 'admin', 'admin', 'root', 'password', 1);
+insert into users (grade, firstName, lastName, username, password, organization) VALUES ('N/A', 'admin', 'admin', 'root', '5f4dcc3b5aa765d61d8327deb882cf99', 1);
