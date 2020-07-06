@@ -15,6 +15,7 @@ import {
 } from 'react-router-dom'
 
 import Login from './Login'
+import Example from './Example'
 
 const axios = require('axios').default
 axios.defaults.headers.post['Content-Type'] = 'application/json'
@@ -27,7 +28,7 @@ function App() {
     currentUser: null,
     loginRedirect: '/',
     cac_enabled: false,
-    isRedirecting: false,
+    isRedirecting: true,
   })
 
   return (
@@ -35,7 +36,7 @@ function App() {
       {state.isRedirecting ? <Redirect to='/login'/> : ''}
       <Switch>
         <Route exact path='/login' render={props => <Login {...props} parentState={state} parentSetState={setState} />} />
-        <Route exact path='/example' render={props => <Login {...props} parentState={state} parentSetState={setState} />} />
+        <Route exact path='/example' render={props => <Example {...props} parentState={state} parentSetState={setState} />} />
       </Switch>
     </div></Router>
   )

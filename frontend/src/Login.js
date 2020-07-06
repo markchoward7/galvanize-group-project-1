@@ -7,7 +7,7 @@ const axios = require('axios').default
 
 function Login(props) {
     const [state, setState] = useState({
-        parent: props.parent,
+        parent: props.parentState,
         username: '',
         password: '',
     })
@@ -18,15 +18,44 @@ function Login(props) {
     })
 
     const handleSubmit = async () => {
-        // axios post to login
-        // if successful set authentication header for all to token received then redirect
-        // else, show error
+        try {
+            const response = await axios.post('/api/login', JSON.stringify({
+                username: state.username,
+                password: state.password,
+            }))
+            if (response.status === 200) {
+                axios.defaults.headers.common['Authorization'] = response.data.token
+                await props.parentSetState({
+                    ...state.parent,
+                    currentUser: response.data.user,
+                    isRedirecting: false,
+                })
+                props.history.push(state.parent.loginRedirect)
+            } else {
+                console.log('failed to login')
+            }
+        } catch (error) {
+            console.log('failed to login -', error.message)
+        }
     }
 
     const handleCacLogin = async () => {
-        // axios get to login
-        // if successful set authentication header for all to token received then redirect
-        // else, show error
+        try {
+            const response = await axios.get('/api/login')
+            if (response.status === 200) {
+                axios.defaults.headers.common['Authorization'] = response.data.token
+                await props.parentSetState({
+                    ...state.parent,
+                    currentUser: response.data.user,
+                    isRedirecting: false,
+                })
+                props.history.push(state.parent.loginRedirect)
+            } else {
+                console.log('failed to login')
+            }
+        } catch (error) {
+            console.log('failed to login -', error.message)
+        }
     }
 
     return (
