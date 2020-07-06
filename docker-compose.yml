@@ -8,6 +8,7 @@ services:
             - 80:80
             - 443:443
         networks:
+            - net
             - sso
             - component1
             - component2
@@ -15,18 +16,18 @@ services:
             - component4
             - component5
 
-    sso_frontend:
-        container_name: fitness_app_sso_frontend
-        build: ./sso/frontend
+    frontend:
+        container_name: fitness_app_frontend
+        build: ./frontend
         volumes:
-            - ./sso/frontend:/usr/src/app
-            - sso_frontend_node_modules:/usr/src/app/node_modules
+            - ./frontend:/usr/src/app
+            - frontend_node_modules:/usr/src/app/node_modules
         expose:
             - 3000
         environment:
             - CHOKIDAR_USEPOLLING=true
         networks:
-            - sso
+            - net
         stdin_open: true
         tty: true
     
@@ -42,6 +43,7 @@ services:
             - sso_database
         networks:
             - sso
+            - net
         stdin_open: true
         tty: true
 
@@ -56,21 +58,6 @@ services:
             - POSTGRES_DB=user_db
         networks:
             - sso
-
-    comp1_frontend:
-        container_name: fitness_app_comp1_frontend
-        build: ./component1/frontend
-        volumes:
-            - ./component1/frontend:/usr/src/app
-            - comp1_frontend_node_modules:/usr/src/app/node_modules
-        expose:
-            - 3000
-        environment:
-            - CHOKIDAR_USEPOLLING=true
-        networks:
-            - component1
-        stdin_open: true
-        tty: true
     
     comp1_backend:
         container_name: fitness_app_comp1_backend
@@ -84,7 +71,7 @@ services:
             - comp1_database
         networks:
             - component1
-            - sso
+            - net
         stdin_open: true
         tty: true
 
@@ -99,21 +86,6 @@ services:
             - POSTGRES_DB=component1
         networks:
             - component1
-
-    comp2_frontend:
-        container_name: fitness_app_comp2_frontend
-        build: ./component2/frontend
-        volumes:
-            - ./component2/frontend:/usr/src/app
-            - comp2_frontend_node_modules:/usr/src/app/node_modules
-        expose: 
-            - 3000
-        environment:
-            - CHOKIDAR_USEPOLLING=true
-        networks:
-            - component2
-        stdin_open: true
-        tty: true
     
     comp2_backend:
         container_name: fitness_app_comp2_backend
@@ -127,7 +99,7 @@ services:
             - comp2_database
         networks:
             - component2
-            - sso
+            - net
         stdin_open: true
         tty: true
 
@@ -142,21 +114,6 @@ services:
             - POSTGRES_DB=component2
         networks:
             - component2
-
-    comp3_frontend:
-        container_name: fitness_app_comp3_frontend
-        build: ./component3/frontend
-        volumes:
-            - ./component3/frontend:/usr/src/app
-            - comp3_frontend_node_modules:/usr/src/app/node_modules
-        expose: 
-            - 3000
-        environment:
-            - CHOKIDAR_USEPOLLING=true
-        networks:
-            - component3
-        stdin_open: true
-        tty: true
     
     comp3_backend:
         container_name: fitness_app_comp3_backend
@@ -170,7 +127,7 @@ services:
             - comp3_database
         networks:
             - component3
-            - sso
+            - net
         stdin_open: true
         tty: true
 
@@ -185,21 +142,6 @@ services:
             - POSTGRES_DB=component3
         networks:
             - component3
-
-    comp4_frontend:
-        container_name: fitness_app_comp4_frontend
-        build: ./component4/frontend
-        volumes:
-            - ./component4/frontend:/usr/src/app
-            - comp4_frontend_node_modules:/usr/src/app/node_modules
-        expose: 
-            - 3000
-        environment:
-            - CHOKIDAR_USEPOLLING=true
-        networks:
-            - component4
-        stdin_open: true
-        tty: true
     
     comp4_backend:
         container_name: fitness_app_comp4_backend
@@ -213,7 +155,7 @@ services:
             - comp4_database
         networks:
             - component4
-            - sso
+            - net
         stdin_open: true
         tty: true
 
@@ -228,21 +170,6 @@ services:
             - POSTGRES_DB=component4
         networks:
             - component4
-
-    comp5_frontend:
-        container_name: fitness_app_comp5_frontend
-        build: ./component5/frontend
-        volumes:
-            - ./component5/frontend:/usr/src/app
-            - comp5_frontend_node_modules:/usr/src/app/node_modules
-        expose: 
-            - 3000
-        environment:
-            - CHOKIDAR_USEPOLLING=true
-        networks:
-            - component5
-        stdin_open: true
-        tty: true
     
     comp5_backend:
         container_name: fitness_app_comp5_backend
@@ -256,7 +183,7 @@ services:
             - comp5_database
         networks:
             - component5
-            - sso
+            - net
         stdin_open: true
         tty: true
 
@@ -274,18 +201,13 @@ services:
 
 volumes:
     sso_postgres_data:
-    sso_frontend_node_modules:
+    frontend_node_modules:
     sso_backend_node_modules:
     component1_postgres_data:
     component2_postgres_data:
     component3_postgres_data:
     component4_postgres_data:
     component5_postgres_data:
-    comp1_frontend_node_modules:
-    comp2_frontend_node_modules:
-    comp3_frontend_node_modules:
-    comp4_frontend_node_modules:
-    comp5_frontend_node_modules:
     comp1_backend_node_modules:
     comp2_backend_node_modules:
     comp3_backend_node_modules:
@@ -293,6 +215,8 @@ volumes:
     comp5_backend_node_modules:
 
 networks:
+    net:
+        driver: bridge
     sso:
         driver: bridge
     component1:
