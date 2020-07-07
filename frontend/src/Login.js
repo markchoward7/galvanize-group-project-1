@@ -1,4 +1,5 @@
 import React, {
+    useEffect,
     useState
 } from 'react'
 
@@ -16,12 +17,30 @@ function Login(props) {
         lastName: '',
         grade: '',
         organization: '',
+        organizationArray: [],
     })
+
+    useEffect(() => {
+        async function fetchData() {
+            const response = await axios.get('/api/organizations')
+            setState({
+                ...state,
+                organizationArray: JSON.parse(response.data[0].tree)
+            })
+            console.log(response.data[0].tree)
+        }
+        fetchData()
+    }, [])
 
     const handleChange = event => setState({
         ...state,
         [event.target.name]: event.target.value
     })
+
+    const handleSelectChange = event => {
+        let newSelect = document.createElement("select", { name : "organization", onChange: handleSelectChange })
+        //for (const org of state.organization.)
+    }
 
     const handleLogin = async () => {
         if (!state.username || !state.password1) {
@@ -138,7 +157,9 @@ function Login(props) {
                 <br />
                 Grade:<input type='text' name='grade' onChange={handleChange}/>
                 <br />
-                Organization:<input type='text' name='organization' onChange={handleChange}/>
+                Organization:<select name='organization' onChange={handleSelectChange}>
+                    {state.organizationArray.map(org => <option value={org.name}>{`${org.abbreviation} - ${org.name}`}</option>)}
+                </select>
                 <br />
                 <button onClick={handleRegister}>Submit</button>
                 <br />

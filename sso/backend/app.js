@@ -49,7 +49,10 @@ app.get('/api/link-cac', (req, res) => {
     } catch (error) {
         res.status(401).send('Not logged in')
     }
-    
+})
+
+app.get('/api/organizations', (req, res) => {
+    queries.getOrganizations(req, res)
 })
 
 //// EXAMPLE OF VERIFYING AUTHENTICATION

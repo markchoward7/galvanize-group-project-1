@@ -12,7 +12,7 @@ const passphrase = 'passphrase'
 
 function tokenResponse(results) {
     let user = results.rows[0]
-    console.log(user)
+    delete user.password
     const token = jwt.sign({ user: user }, passphrase, { expiresIn: '1h' })
     return {
         user: user,
@@ -73,7 +73,54 @@ function linkCAC(req, res, userId, edipi) {
     })
 }
 
+function getOrganizations(req, res) {
+    pool.query(
+        `WITH RECURSIVE org_with_level AS 
+        (
+            SELECT *, 0 AS lvl FROM organizations WHERE belongsTo IS NULL
+            UNION ALL
+            SELECT child.*, parent.lvl + 1 FROM organizations child JOIN org_with_level parent ON parent.id = child.belongsTo
+        ),
+        maxlvl AS
+        (
+            SELECT max(lvl) maxlvl FROM org_with_level
+        ),
+        c_tree AS
+        (
+            SELECT org_with_level.*, NULL::JSONB children FROM org_with_level, maxlvl WHERE lvl = maxlvl
+            UNION
+            (
+                SELECT (branch_parent).*, jsonb_agg(branch_child)
+                FROM
+                (
+                    SELECT branch_parent, to_jsonb(branch_child) - 'lvl' - 'belongsTo' - 'id' as branch_child
+                    FROM org_with_level branch_parent
+                    JOIN c_tree branch_child ON branch_child.belongsTo = branch_parent.id
+                ) 
+                branch
+                GROUP BY branch.branch_parent
+                UNION
+                SELECT c.*, NULL::JSONB FROM org_with_level c
+                WHERE NOT EXISTS (SELECT 1 FROM org_with_level hypothetical_child WHERE hypothetical_child.belongsTo = c.id)
+            )
+        )
+        SELECT jsonb_pretty
+        (
+            array_to_json(array_agg(row_to_json(c_tree)::JSONB - 'lvl' - 'belongsTo' - 'id'))::JSONB
+        )
+        AS tree FROM c_tree WHERE lvl = 0`
+        , (error, results) => {    
+        if (error) {
+            console.log(error)
+            res.status(500).send()
+        } else {
+            res.send(results.rows)
+        }
+    })
+}
+
 exports.loginPassword = loginPassword
 exports.loginCAC = loginCAC
 exports.createUser = createUser
 exports.linkCAC = linkCAC
+exports.getOrganizations = getOrganizations
