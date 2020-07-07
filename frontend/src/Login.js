@@ -16,9 +16,11 @@ function Login(props) {
         firstName: '',
         lastName: '',
         grade: '',
-        organization: '',
+        organization: {},
         organizationArray: [],
     })
+
+    var selectIndex = 1
 
     useEffect(() => {
         async function fetchData() {
@@ -27,19 +29,60 @@ function Login(props) {
                 ...state,
                 organizationArray: JSON.parse(response.data[0].tree)
             })
-            console.log(response.data[0].tree)
         }
         fetchData()
-    }, [])
+    },[])
 
-    const handleChange = event => setState({
-        ...state,
-        [event.target.name]: event.target.value
-    })
+    const handleChange = event => {
+        console.log(state)
+        setState({
+            ...state,
+            [event.target.name]: event.target.value
+        })
+    }
 
     const handleSelectChange = event => {
-        let newSelect = document.createElement("select", { name : "organization", onChange: handleSelectChange })
-        //for (const org of state.organization.)
+        let largestIndex = selectIndex
+        console.log(event.target.id)
+        console.log(largestIndex)
+        while (largestIndex > Number(event.target.id.split("-")[2])) {
+            let select = document.getElementById(`org-select-${largestIndex}`)
+            select.parentNode.removeChild(select)
+            largestIndex--
+        }
+        let organization = JSON.parse(event.target.value)
+        if (organization) {
+            if (organization.children) {
+                largestIndex++
+                let newSelect = document.createElement("select")
+                newSelect.onchange = handleSelectChange
+                newSelect.id = `org-select-${largestIndex}`
+                let newOption = document.createElement("option")
+                newOption.value = null
+                newOption.innerText = "--"
+                newSelect.appendChild(newOption)
+                for (const org of organization.children) {
+                    let newOption = document.createElement("option")
+                    newOption.value = JSON.stringify(org)
+                    newOption.innerText = `${org.abbreviation} - ${org.name}`
+                    newSelect.appendChild(newOption)
+                }
+                let registerForm = document.getElementById("register-form")
+                let registerButton = document.getElementById("register-submit")
+                registerForm.insertBefore(newSelect, registerButton)
+            }
+        } else {
+            try {
+                organization = JSON.parse(document.getElementById(`org-select-${largestIndex-1}`).value)
+            } catch (error) {
+                organization = {}
+            }
+        }
+        setState({
+            ...state,
+            organization: organization,
+        })
+        selectIndex = largestIndex
     }
 
     const handleLogin = async () => {
@@ -105,7 +148,7 @@ function Login(props) {
                 firstName: state.firstName,
                 lastName: state.lastName,
                 grade: state.grade,
-                organization: state.organization,
+                organization: state.organization.name,
             }))
             if (response.status === 201) {
                 axios.defaults.headers.common['Authorization'] = response.data.token
@@ -144,7 +187,7 @@ function Login(props) {
                 <a onClick={handleSwitch}>Register</a>
             </div>
         :
-            <div>
+            <div id="register-form">
                 Username:<input type='text' name='username' onChange={handleChange}/>
                 <br />
                 Password:<input type='password' name='password1' onChange={handleChange}/>
@@ -157,11 +200,12 @@ function Login(props) {
                 <br />
                 Grade:<input type='text' name='grade' onChange={handleChange}/>
                 <br />
-                Organization:<select name='organization' onChange={handleSelectChange}>
-                    {state.organizationArray.map(org => <option value={org.name}>{`${org.abbreviation} - ${org.name}`}</option>)}
+                Organization:<select name='organization' id="org-select-1" onChange={handleSelectChange}>
+                    <option value={null}>--</option>
+                    {state.organizationArray.map(org => <option value={JSON.stringify(org)}>{`${org.abbreviation} - ${org.name}`}</option>)}
                 </select>
                 <br />
-                <button onClick={handleRegister}>Submit</button>
+                <button onClick={handleRegister} id="register-submit">Submit</button>
                 <br />
                 <a onClick={handleSwitch}>Login</a>
             </div>
