@@ -12,10 +12,6 @@ const app = express()
 app.use(cors())
 app.use(bodyParser.json())
 
-app.get('/api', (req, res) => {
-    res.send("sso backend")
-})
-
 app.post('/api/login', (req, res) => {
     queries.loginPassword(req, res)
 })
@@ -53,6 +49,36 @@ app.get('/api/link-cac', (req, res) => {
 
 app.get('/api/organizations', (req, res) => {
     queries.getOrganizations(req, res)
+})
+
+app.post('/api/organizations', (req, res) => {
+    try {
+        jwt.verify(req.headers.authorization, passphrase)
+        if (req.body.abbreviation && req.body.name && req.body.belongsTo) {
+            queries.createOrganization(req, res)
+        } else {
+            res.status(400).send()
+        }
+    } catch (error) {
+        res.status(401).send('Not logged in')
+    }
+})
+
+app.get('/api/organizations/:id', (req, res) => {
+    queries.getOrganizationById(req, res)
+})
+
+app.patch('/api/organizations/:id', (req, res) => {
+    try {
+        jwt.verify(req.headers.authorization, passphrase)
+        if (req.body.abbreviation && req.body.name) {
+            queries.updateOrganization(req, res)
+        } else {
+            res.status(400).send()
+        }
+    } catch (error) {
+        res.status(401).send('Not logged in')
+    }
 })
 
 //// EXAMPLE OF VERIFYING AUTHENTICATION
