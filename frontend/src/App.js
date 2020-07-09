@@ -26,6 +26,8 @@ import Announcements from './Announcements'
 import NewAnnouncement from './NewAnnouncement'
 import UpdateAnnouncement from './UpdateAnnouncement'
 
+import UserWorkouts from './UserWorkouts'
+import AddExercises from './AddExercises';
 
 const axios = require('axios').default
 axios.defaults.headers.post['Content-Type'] = 'application/json'
@@ -56,6 +58,9 @@ function App() {
           <Route exact path='/announcements' render={props => <Announcements {...props} parentState={state} parentSetState={setState} />} />
           <Route exact path='/new-announcement' render={props => <NewAnnouncement {...props} parentState={state} parentSetState={setState} />} />
           <Route exact path='/update-announcement' render={props => <UpdateAnnouncement {...props} parentState={state} parentSetState={setState} />} />
+          <Route exact path='/workouts' render={props => <UserWorkouts {...props} parentState={state} parentSetState={setState} />} />
+          <Route exact path='/exercises' render={props => <AddExercises {...props} parentState={state} parentSetState={setState} />} />
+
         </Switch>
       </div>
     </div></Router>

@@ -45,6 +45,10 @@ function Sidebar(props) {
                     <br />
                     <Link to="/update-org">Update Organization</Link>
                     <br />
+                    <Link to="/workouts">Workouts</Link>
+                    <br />
+                    <Link to="/exercises">Exercises</Link>
+                    <br />
                     <a onClick={handleLogout}>Logout</a>
                 </div>
             :

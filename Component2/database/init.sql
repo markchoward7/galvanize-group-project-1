@@ -6,4 +6,4 @@ CREATE TABLE announcements
     information TEXT NOT NULL
 );
 
-INSERT INTO announcements (date_created, organization_id, information) VALUES (current_timestamp, 1, "The new and improved AFFMS is up and running!");
+INSERT INTO announcements (date_created, organization_id, information) VALUES (current_timestamp, 1, 'The new and improved AFFMS is up and running!');
