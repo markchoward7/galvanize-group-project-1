@@ -52,6 +52,7 @@ function Login(props) {
             if (organization.children) {
                 largestIndex++
                 let newSelect = document.createElement("select")
+                newSelect.name = "organization"
                 newSelect.onchange = handleSelectChange
                 newSelect.id = `org-select-${largestIndex}`
                 newSelect.className = "columns-1-2"
@@ -135,7 +136,7 @@ function Login(props) {
             alert("passwords must match")
             return
         }
-        if (!state.username || !state.password1 || !state.firstName || !state.lastName || !state.grade || !state.organization) {
+        if (!state.username || !state.password1 || !state.firstName || !state.lastName || !state.grade || !state.organization.name) {
             alert("all fields are requried")
             return
         }
@@ -168,7 +169,14 @@ function Login(props) {
         setState({
             ...state,
             login: !state.login,
+            organization: {},
         })
+        let selects = document.getElementsByName("organization")
+        for (const select of selects) {
+            if (select.id !== "org-select-1") {
+                select.parentNode.removeChild(select)
+            }
+        }
     }
 
     return (
