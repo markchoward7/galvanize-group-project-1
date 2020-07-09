@@ -14,7 +14,6 @@ services:
             - comp2_backend
             - comp3_backend
             - comp4_backend
-            - comp5_backend
         networks:
             - net
             - sso
@@ -22,7 +21,6 @@ services:
             - component2
             - component3
             - component4
-            - component5
 
     frontend:
         container_name: fitness_app_frontend
@@ -178,34 +176,6 @@ services:
             - POSTGRES_DB=component4
         networks:
             - component4
-    
-    comp5_backend:
-        container_name: fitness_app_comp5_backend
-        build: ./component5/backend
-        volumes: 
-            - ./component5/backend:/usr/src/app
-            - comp5_backend_node_modules:/usr/src/app/node_modules
-        expose: 
-            - 3001
-        depends_on:
-            - comp5_database
-        networks:
-            - component5
-            - net
-        stdin_open: true
-        tty: true
-
-    comp5_database:
-        container_name: fitness_app_comp5_database
-        build: ./component5/database
-        volumes:
-            - component5_postgres_data:/var/lib/postgresql/data
-        environment:
-            - POSTGRES_USER=admin
-            - POSTGRES_PASSWORD=admin
-            - POSTGRES_DB=component5
-        networks:
-            - component5
 
 volumes:
     sso_postgres_data:
@@ -215,12 +185,10 @@ volumes:
     component2_postgres_data:
     component3_postgres_data:
     component4_postgres_data:
-    component5_postgres_data:
     comp1_backend_node_modules:
     comp2_backend_node_modules:
     comp3_backend_node_modules:
     comp4_backend_node_modules:
-    comp5_backend_node_modules:
 
 networks:
     net:
@@ -234,6 +202,4 @@ networks:
     component3:
         driver: bridge
     component4:
-        driver: bridge
-    component5:
         driver: bridge
