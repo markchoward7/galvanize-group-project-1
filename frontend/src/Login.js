@@ -85,7 +85,7 @@ function Login(props) {
 
     const handleLogin = async () => {
         if (!state.username || !state.password1) {
-            alert("all fields are requried")
+            alert("all fields are required")
             return
         }
         try {
