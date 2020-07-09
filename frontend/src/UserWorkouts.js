@@ -169,7 +169,7 @@ function UserWorkouts() {
           <Button variant="primary" onClick={stopWorkout}>
             Stop Workout
           </Button>
-        <Form key="workoutForm" onSubmit={handleSubmit}>
+        <Form key="workoutForm">
           <Form.Row>
             <Form.Group as={Col} controlId="formGridExercise">
               <Form.Label key="exercise">Exercise</Form.Label>
@@ -199,7 +199,7 @@ function UserWorkouts() {
               <Form.Control onChange={(e) => setlogWeight(e.target.value)} />
             </Form.Group>
           </Form.Row>
-          <Button variant="primary" type="submit">
+          <Button variant="primary" onClick={handleSubmit}>
             Submit
           </Button>
         </Form>
