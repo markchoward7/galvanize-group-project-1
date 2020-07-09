@@ -17,6 +17,8 @@ import Home from './Home'
 import Login from './Login'
 import Example from './Example'
 import Sidebar from './Sidebar'
+
+import FitnessCompetition from './FitnessCompetition'
 import NewOrganization from './NewOrganization'
 import UpdateOrganization from './UpdateOrganization'
 import AnnouncementBox from './AnnouncementBox'
@@ -48,6 +50,7 @@ function App() {
           <Route exact path='/' render={props => <Home {...props} parentState={state} parentSetState={setState} />} />
           <Route exact path='/login' render={props => <Login {...props} parentState={state} parentSetState={setState} />} />
           <Route exact path='/example' render={props => <Example {...props} parentState={state} parentSetState={setState} />} />
+          <Route exact path='/fitnessCompetition' render={props => <FitnessCompetition {...props} parentState={state} parentSetState={setState} />} />
           <Route exact path='/new-org' render={props => <NewOrganization {...props} parentState={state} parentSetState={setState} />} />
           <Route exact path='/update-org' render={props => <UpdateOrganization {...props} parentState={state} parentSetState={setState} />} />
           <Route exact path='/announcements' render={props => <Announcements {...props} parentState={state} parentSetState={setState} />} />
@@ -58,5 +61,5 @@ function App() {
     </div></Router>
   )
 }
-
+//
 export default App;

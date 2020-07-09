@@ -8,3 +8,4 @@ app.get('/comp3/api', (req, res) => {
 
 const port = 3001
 app.listen(port, () => console.log('App listening'))
+
