@@ -13,7 +13,6 @@ const passphrase = 'passphrase'
 function tokenResponse(results) {
     let user = results.rows[0]
     delete user.password
-    console.log(user)
     const token = jwt.sign({ user: user }, passphrase, { expiresIn: '1h' })
     return {
         user: user,
@@ -26,8 +25,12 @@ function loginPassword(req, res) {
     pool.query("SELECT * FROM users WHERE username = $1 AND password = $2", [req.body.username, hash], (error, results) => {
         if (error) {
             console.log(error)
+            res.status(500).send()
+        } else if (results.rows.length === 0) {
+            console.log("invalid username/password")
             res.status(400).send('invalid username/password')
-        } else {
+        }
+        else {
             res.send(tokenResponse(results))
         }
     })
@@ -37,7 +40,9 @@ function loginCAC(req, res, edipi) {
     pool.query("SELECT * FROM users WHERE edipi = $1", [edipi], (error, results) => {
         if (error) {
             console.log(error)
-            res.status(400).send('invalid CAC')
+            res.status(500).send()
+        } else if (results.rows.length === 0) {
+            res.status(400).send('invalid CAC')  
         } else {
             res.send(tokenResponse(results))
         }
@@ -169,6 +174,27 @@ function getOrganizationById(req, res) {
     })
 }
 
+function getOrganizationsIncludingById(req, res) {
+    pool.query(`WITH RECURSIVE orgs AS
+    (
+        SELECT * FROM organizations WHERE id = $1
+        UNION ALL
+        SELECT c.* FROM organizations c, orgs p
+        WHERE
+        c.id = p.belongsTo
+    )
+    SELECT * FROM orgs
+    `,
+    [req.params.id], (error, results) => {
+        if (error) {
+            console.log(error)
+            res.status(500).send()
+        } else {
+            res.send(results.rows)
+        }
+    })
+}
+
 function createOrganization(req, res) {
     pool.query("INSERT INTO organizations (abbreviation, name, belongsTo) VALUES ($1, $2, $3)", [req.body.abbreviation, req.body.name, req.body.belongsTo], (error, results) => {
         if (error) {
@@ -199,3 +225,4 @@ exports.getOrganizations = getOrganizations
 exports.getOrganizationById = getOrganizationById
 exports.createOrganization = createOrganization
 exports.updateOrganization = updateOrganization
+exports.getOrganizationsIncludingById = getOrganizationsIncludingById

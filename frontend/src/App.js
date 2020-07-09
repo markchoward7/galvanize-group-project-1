@@ -20,6 +20,9 @@ import Sidebar from './Sidebar'
 import NewOrganization from './NewOrganization'
 import UpdateOrganization from './UpdateOrganization'
 import AnnouncementBox from './AnnouncementBox'
+import Announcements from './Announcements'
+import NewAnnouncement from './NewAnnouncement'
+import UpdateAnnouncement from './UpdateAnnouncement'
 
 
 const axios = require('axios').default
@@ -42,11 +45,14 @@ function App() {
       {state.isRedirecting ? <Redirect to='/login'/> : <AnnouncementBox />}
       <div className="main">
         <Switch>
-        <Route exact path='/' render={props => <Home {...props} parentState={state} parentSetState={setState} />} />
+          <Route exact path='/' render={props => <Home {...props} parentState={state} parentSetState={setState} />} />
           <Route exact path='/login' render={props => <Login {...props} parentState={state} parentSetState={setState} />} />
           <Route exact path='/example' render={props => <Example {...props} parentState={state} parentSetState={setState} />} />
           <Route exact path='/new-org' render={props => <NewOrganization {...props} parentState={state} parentSetState={setState} />} />
           <Route exact path='/update-org' render={props => <UpdateOrganization {...props} parentState={state} parentSetState={setState} />} />
+          <Route exact path='/announcements' render={props => <Announcements {...props} parentState={state} parentSetState={setState} />} />
+          <Route exact path='/new-announcement' render={props => <NewAnnouncement {...props} parentState={state} parentSetState={setState} />} />
+          <Route exact path='/update-announcement' render={props => <UpdateAnnouncement {...props} parentState={state} parentSetState={setState} />} />
         </Switch>
       </div>
     </div></Router>

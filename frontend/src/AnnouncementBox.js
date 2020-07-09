@@ -8,14 +8,14 @@ const axios = require('axios').default
 function AnnouncementBox(props) {
     const [state, setState] = useState({
         parent: props.parentState,
-        someStateItem: 'someStateValue',
+        announcements: [],
     })
     useEffect(() => {
         async function fetchData() {
-            const response =  await axios.get('/comp1/api')
+            const response =  await axios.get('/comp2/api/announcements')
             setState({
                 ...state,
-                someStateItem: response.data,
+                announcements: response.data,
             })
         }
         fetchData()
@@ -23,7 +23,7 @@ function AnnouncementBox(props) {
 
     return (
         <div className="announcement-box">
-            placeholder text
+            {state.announcements.map(announcement => <div><span>{announcement.date_created}: {announcement.information}</span></div>)}
         </div>
     )
 }

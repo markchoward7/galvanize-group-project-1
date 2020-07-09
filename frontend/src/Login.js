@@ -95,7 +95,6 @@ function Login(props) {
             }))
             if (response.status === 200) {
                 axios.defaults.headers.common['Authorization'] = response.data.token
-                console.log(response.data.user)
                 await props.parentSetState({
                     ...state.parent,
                     currentUser: response.data.user,

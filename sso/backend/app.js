@@ -81,6 +81,10 @@ app.patch('/api/organizations/:id', (req, res) => {
     }
 })
 
+app.get('/api/organizations-including/:id', (req, res) => {
+    queries.getOrganizationsIncludingById(req, res)
+})
+
 //// EXAMPLE OF VERIFYING AUTHENTICATION
 //// A requires that you need
 // const jwt = require('jsonwebtoken')
