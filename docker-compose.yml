@@ -7,6 +7,14 @@ services:
         ports:
             - 80:80
             - 443:443
+        depends_on: 
+            - frontend
+            - sso_backend
+            - comp1_backend
+            - comp2_backend
+            - comp3_backend
+            - comp4_backend
+            - comp5_backend
         networks:
             - net
             - sso
