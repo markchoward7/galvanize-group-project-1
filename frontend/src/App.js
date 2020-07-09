@@ -17,7 +17,6 @@ import Home from './Home'
 import Login from './Login'
 import Example from './Example'
 import Sidebar from './Sidebar'
-
 import FitnessCompetition from './FitnessCompetition'
 import NewOrganization from './NewOrganization'
 import UpdateOrganization from './UpdateOrganization'
@@ -25,9 +24,9 @@ import AnnouncementBox from './AnnouncementBox'
 import Announcements from './Announcements'
 import NewAnnouncement from './NewAnnouncement'
 import UpdateAnnouncement from './UpdateAnnouncement'
-
 import UserWorkouts from './UserWorkouts'
 import AddExercises from './AddExercises';
+import Nutrition from './Nutrition'
 
 const axios = require('axios').default
 axios.defaults.headers.post['Content-Type'] = 'application/json'
@@ -60,7 +59,7 @@ function App() {
           <Route exact path='/update-announcement' render={props => <UpdateAnnouncement {...props} parentState={state} parentSetState={setState} />} />
           <Route exact path='/workouts' render={props => <UserWorkouts {...props} parentState={state} parentSetState={setState} />} />
           <Route exact path='/exercises' render={props => <AddExercises {...props} parentState={state} parentSetState={setState} />} />
-
+          <Route exact path='/nutrition' render={props => <Nutrition {...props} parentState={state} parentSetState={setState} />} />
         </Switch>
       </div>
     </div></Router>

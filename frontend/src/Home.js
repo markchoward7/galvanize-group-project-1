@@ -40,6 +40,8 @@ function Home(props) {
             <Link to="/workouts">Workouts</Link>
             <br />
             <Link to="/exercises">Exercises</Link>
+            <br />
+            <Link to="/nutrition">Recipes</Link>
         </div>
     )
 }

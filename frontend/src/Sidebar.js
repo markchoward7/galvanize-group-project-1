@@ -41,13 +41,15 @@ function Sidebar(props) {
                     <br /> 
                     <Link to='/fitnessCompetition'>Competitions</Link>
                     <br />
-                    <Link to='/new-org'>Add Organization</Link>
-                    <br />
-                    <Link to="/update-org">Update Organization</Link>
-                    <br />
                     <Link to="/workouts">Workouts</Link>
                     <br />
                     <Link to="/exercises">Exercises</Link>
+                    <br />
+                    <Link to="/nutrition">Recipes</Link>
+                    <br />
+                    <Link to='/new-org'>Add Organization</Link>
+                    <br />
+                    <Link to="/update-org">Update Organization</Link>
                     <br />
                     <a onClick={handleLogout}>Logout</a>
                 </div>
