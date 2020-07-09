@@ -34,6 +34,7 @@ function Home(props) {
             Welcome to the new and improved AFFMS.
             <br />
             <Link to='/announcements'>Announcements</Link>
+            <br />
             <Link to='/fitnessCompetition'>Competitions</Link>
         </div>
     )
