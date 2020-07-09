@@ -39,6 +39,8 @@ function Sidebar(props) {
                     <br />
                     <Link to='/announcements'>Announcements</Link>
                     <br /> 
+                    <Link to='/fitnessCompetition'>Competitions</Link>
+                    <br />
                     <Link to='/new-org'>Add Organization</Link>
                     <br />
                     <Link to="/update-org">Update Organization</Link>
