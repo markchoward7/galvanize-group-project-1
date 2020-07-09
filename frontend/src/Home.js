@@ -36,6 +36,8 @@ function Home(props) {
             <Link to='/announcements'>Announcements</Link>
             <br />
             <Link to='/fitnessCompetition'>Competitions</Link>
+            <Link to="/workouts">Workouts</Link>
+            <Link to="/exercises">Exercises</Link>
         </div>
     )
 }
