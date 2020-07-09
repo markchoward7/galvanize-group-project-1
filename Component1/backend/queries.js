@@ -103,9 +103,24 @@ const addCompetitors = async (req, res) => {
         var user_id = results.rows[0].user_id;    
 
         results = await pool.query('INSERT INTO competitors (user_id, competition_id) VALUES ($1, $2) RETURNING *', [user_id, competition_id]);
-        res.status(201).send(`Competitors successfully added`)
+        res.status(201).send(`Competitor successfully added`)
     }
 
+}
+
+const addTeam = async (req, res) => {
+    console.log("I am inside addTeam")
+    const{team, competition_id} = req.body
+
+    let results =  await pool.query('SELECT user_id FROM users WHERE squadron = $1', [team]);
+    let user_id = results.rows
+    console.log(user_id)
+
+    for(var i = 0; i < user_id.length; i++){
+        results = await pool.query('INSERT INTO competitors (user_id, competition_id) VALUES ($1, $2) RETURNING *', [user_id[i].user_id, competition_id]);
+        
+    }
+    res.status(201).send(`Competitors successfully added`)
 }
 
 const createPrize = (req, res) => {
@@ -168,6 +183,7 @@ module.exports = {
     getUserCompetitions,
     createCompetition,
     addCompetitors,
+    addTeam,
     createPrize,
     deletePrize,
     updatePoints,

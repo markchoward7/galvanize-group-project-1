@@ -21,9 +21,9 @@ class AdminPage extends React.Component{
                 this.setState({style: event.target.value})
                 if(this.state.style === "Team"){
                     this.setState({team: true})
-                }else(
+                }else{
                     this.setState({team: false}) 
-                )
+                }
             }
         
             setDurationLength = (event) => {
@@ -55,13 +55,14 @@ class AdminPage extends React.Component{
                     team: team,
                     competition_id: competition_id
                }))
+               console.log("Submitted to the query: ", team, competition_id)
             }
 
             submitIndividuals = async (individual) => {
                 const competitionsRaw =  await axios.get('/comp1/api/competitionsRaw')
                 const competition_id = competitionsRaw.data[competitionsRaw.data.length-1].competition_id
                 const response = await axios.post('/comp1/api/addCompetitors', JSON.stringify({
-                    names: individual,
+                    names: [individual],
                     competition_id: competition_id
                }))
             }
@@ -79,7 +80,8 @@ class AdminPage extends React.Component{
                             <div>
                                 <label>Competition Style: </label>
                                 <select id={'style'} onChange={this.setStyle}>
-                                        <option selected>Team</option>
+                                        <option value={''} selected></option>
+                                        <option>Team</option>
                                         <option>Individual</option>
                                 </select>
                             </div>
@@ -92,7 +94,8 @@ class AdminPage extends React.Component{
                             <div>
                                 <label>Duration Type: </label>
                                 <select id={'duration_name'} onChange={this.setDurationName}>
-                                        <option selected>Day(s)</option>
+                                        <option value={''}></option>
+                                        <option>Day(s)</option>
                                         <option>Week(s)</option>
                                         <option>Month(s)</option>
                                 </select>
@@ -109,10 +112,13 @@ class AdminPage extends React.Component{
                         </form>
 
                         <br></br>
+                        <div>You must submit a competition before you can add competitors.</div>
+                        <br></br>
 
                         <div>
-                            {this.state.team ? <AddTeam users={this.props.users} submit={this.submitTeam}/> : <AddIndividuals users={this.props.users} submit={this.submitIndividuals}/>}
+                            {this.state.team ? <AddIndividuals users={this.props.users} submit={this.submitIndividuals}/>: <AddTeam users={this.props.users} submit={this.submitTeam}/>}
                         </div>
+
 
                     </div>
 

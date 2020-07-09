@@ -41,6 +41,9 @@ app.post('/comp1/api/createCompetition', db.createCompetition)
 //Adds competitors to a competition
 app.post('/comp1/api/addCompetitors', db.addCompetitors)
 
+//Adds team to a competition
+app.post('/comp1/api/addTeam', db.addTeam)
+
 //Creates a new prize
 app.post('/comp1/api/createPrize', db.createPrize)
 

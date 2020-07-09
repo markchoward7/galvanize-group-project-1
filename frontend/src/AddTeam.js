@@ -17,6 +17,7 @@ class AddTeam extends React.Component{
             sendTeam = (event) => {
                 event.preventDefault()
                 this.props.submit(this.state.team)
+                console.log("This team, initial submit: ", this.state.team)
                 alert("Team Submitted")
             }           
         
@@ -28,7 +29,8 @@ class AddTeam extends React.Component{
                             <div>
                                 <label>Add teams: </label>
                                 <select id={'teams'} onChange={this.setTeam}>
-                                        <option selected>69th Fighter Squadron</option>
+                                        <option value={''} selected></option>
+                                        <option>69th Fighter Squadron</option>
                                         <option>56th Aircraft Maintenance Squadron</option>
                                 </select>
                             </div>
