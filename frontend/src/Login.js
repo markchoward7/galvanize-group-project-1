@@ -1,4 +1,5 @@
 import React, {
+    useEffect,
     useState
 } from 'react'
 
@@ -15,13 +16,72 @@ function Login(props) {
         firstName: '',
         lastName: '',
         grade: '',
-        organization: '',
+        organization: {},
+        organizationArray: [],
     })
 
-    const handleChange = event => setState({
-        ...state,
-        [event.target.name]: event.target.value
-    })
+    var selectIndex = 1
+
+    useEffect(() => {
+        async function fetchData() {
+            const response = await axios.get('/api/organizations')
+            setState({
+                ...state,
+                organizationArray: response.data
+            })
+        }
+        fetchData()
+    },[])
+
+    const handleChange = event => {
+        setState({
+            ...state,
+            [event.target.name]: event.target.value
+        })
+    }
+
+    const handleSelectChange = event => {
+        let largestIndex = selectIndex
+        while (largestIndex > Number(event.target.id.split("-")[2])) {
+            let select = document.getElementById(`org-select-${largestIndex}`)
+            select.parentNode.removeChild(select)
+            largestIndex--
+        }
+        let organization = JSON.parse(event.target.value)
+        if (organization) {
+            if (organization.children) {
+                largestIndex++
+                let newSelect = document.createElement("select")
+                newSelect.onchange = handleSelectChange
+                newSelect.id = `org-select-${largestIndex}`
+                newSelect.className = "columns-1-2"
+                let newOption = document.createElement("option")
+                newOption.value = null
+                newOption.innerText = "--"
+                newSelect.appendChild(newOption)
+                for (const org of organization.children) {
+                    let newOption = document.createElement("option")
+                    newOption.value = JSON.stringify(org)
+                    newOption.innerText = `${org.abbreviation} - ${org.name}`
+                    newSelect.appendChild(newOption)
+                }
+                let registerForm = document.getElementById("register-form")
+                let registerButton = document.getElementById("register-submit")
+                registerForm.insertBefore(newSelect, registerButton)
+            }
+        } else {
+            try {
+                organization = JSON.parse(document.getElementById(`org-select-${largestIndex-1}`).value)
+            } catch (error) {
+                organization = {}
+            }
+        }
+        setState({
+            ...state,
+            organization: organization,
+        })
+        selectIndex = largestIndex
+    }
 
     const handleLogin = async () => {
         if (!state.username || !state.password1) {
@@ -86,7 +146,7 @@ function Login(props) {
                 firstName: state.firstName,
                 lastName: state.lastName,
                 grade: state.grade,
-                organization: state.organization,
+                organization: state.organization.name,
             }))
             if (response.status === 201) {
                 axios.defaults.headers.common['Authorization'] = response.data.token
@@ -112,36 +172,27 @@ function Login(props) {
     }
 
     return (
-        <div> { state.login ?
-            <div>
-                Username:<input type='text' name='username' onChange={handleChange}/>
-                <br />
-                Password:<input type='password' name='password1' onChange={handleChange}/>
-                <br />
+        <div className="auth-page"> { state.login ?
+            <div className="auth-form grid-2">
+                <p>Username:</p><input type='text' name='username' onChange={handleChange}/>
+                <p>Password:</p><input type='password' name='password1' onChange={handleChange}/>
                 <button onClick={handleLogin}>Submit</button>
-                <br />
                 <button onClick={handleCacLogin}>CAC Login</button>
-                <br />
-                <a onClick={handleSwitch}>Register</a>
+                <a className="columns-1-2" onClick={handleSwitch}>Register</a>
             </div>
         :
-            <div>
-                Username:<input type='text' name='username' onChange={handleChange}/>
-                <br />
-                Password:<input type='password' name='password1' onChange={handleChange}/>
-                <br />
-                Confirm Password:<input type='password' name='password2' onChange={handleChange}/>
-                <br />
-                First Name:<input type='text' name='firstName' onChange={handleChange}/>
-                <br />
-                Last Name:<input type='text' name='lastName' onChange={handleChange}/>
-                <br />
-                Grade:<input type='text' name='grade' onChange={handleChange}/>
-                <br />
-                Organization:<input type='text' name='organization' onChange={handleChange}/>
-                <br />
-                <button onClick={handleRegister}>Submit</button>
-                <br />
+            <div id="register-form" className="auth-form grid-2">
+                <p>Username:</p><input type='text' name='username' onChange={handleChange}/>
+                <p>Password:</p><input type='password' name='password1' onChange={handleChange}/>
+                <p>Confirm Password:</p><input type='password' name='password2' onChange={handleChange}/>
+                <p>First Name:</p><input type='text' name='firstName' onChange={handleChange}/>
+                <p>Last Name:</p><input type='text' name='lastName' onChange={handleChange}/>
+                <p>Grade:</p><input type='text' name='grade' onChange={handleChange}/>
+                <p>Organization:</p><select name='organization' id="org-select-1" onChange={handleSelectChange}>
+                    <option value={null}>--</option>
+                    {state.organizationArray.map(org => <option value={JSON.stringify(org)}>{`${org.abbreviation} - ${org.name}`}</option>)}
+                </select>
+                <button onClick={handleRegister} id="register-submit">Submit</button>
                 <a onClick={handleSwitch}>Login</a>
             </div>
         } </div>
