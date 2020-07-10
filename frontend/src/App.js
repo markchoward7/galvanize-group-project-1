@@ -5,18 +5,18 @@ import React, {
 
 import './App.css';
 import Tester from './Tester'
-import {BrowserRouter as Router,Link,Switch,HashRouter, NavLink} from "react-router-dom"
+import {BrowserRouter as Router, Link, Switch,HashRouter, NavLink, Redirect} from "react-router-dom"
 import Route from 'react-router-dom/Route'
 import CheckTest from './CheckTest'
 import Tester2 from './Tester2';
 
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  Redirect,
-} from 'react-router-dom'
+// import {
+//   BrowserRouter as Router,
+//   Switch,
+//   Route,
+//   Link,
+//   Redirect,
+// } from 'react-router-dom'
 
 import Home from './Home'
 import Login from './Login'
