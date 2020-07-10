@@ -19,4 +19,3 @@ function PrizePage(props){
 
 export default PrizePage
 
-//<input type="button" value="Collect Prize" />

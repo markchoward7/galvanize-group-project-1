@@ -83,7 +83,7 @@ const getUserCompetitions = async (req, res) => {
 const createCompetition = (req, res) => {
     const {title, style, duration_length, duration_name, points} = req.body
 
-    pool.query('INSERT INTO competitions (title, style, duration_length, duration_name, verified, points) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *', [title, style, duration_length, duration_name, true, points], (error, results) => {
+    pool.query('INSERT INTO competitions (title, style, duration_length, duration_name, verified, points, num_completed_1, num_completed_2) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *', [title, style, duration_length, duration_name, true, points, 0, 0], (error, results) => {
       if (error) {
         throw error
       }

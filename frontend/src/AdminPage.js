@@ -14,7 +14,6 @@ class AdminPage extends React.Component{
         
             setTitle = (event) => {
                 this.setState({title: event.target.value})
-                console.log(this.state.title)
             }
         
             setStyle = (event) => {
@@ -40,7 +39,6 @@ class AdminPage extends React.Component{
         
             sendCompetition = async (event) => {
                 event.preventDefault()
-                console.log("This state ", this.state)
                 if (this.state.title == '') { alert("Please enter a competition name"); return; }
                 if (this.state.points == 0) { alert("Please enter competition point value"); return; }
                 this.props.submit(this.state.title, this.state.style, this.state.duration_length, this.state.duration_name, this.state.points)
@@ -55,7 +53,6 @@ class AdminPage extends React.Component{
                     team: team,
                     competition_id: competition_id
                }))
-               console.log("Submitted to the query: ", team, competition_id)
             }
 
             submitIndividuals = async (individual) => {

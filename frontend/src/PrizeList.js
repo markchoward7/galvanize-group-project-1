@@ -24,4 +24,3 @@ class PrizeList extends React.Component{
 
 export default PrizeList
 
-//{this.state.viewEmail ? <ViewEmail sender={this.props.email.sender} recipient={this.props.email.recipient} subject={this.props.email.subject} message={this.props.email.message} date={this.props.email.date}/> : null}

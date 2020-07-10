@@ -11,7 +11,6 @@ function CompPage(props){
         }
 
         const submitReps = async (reps, id) => {
-            console.log("In the patch: ", reps, id)
             const response = await axios.patch('/comp1/api/updateReps', JSON.stringify({
                 reps: reps,
                 competition_id: id

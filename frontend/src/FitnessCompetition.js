@@ -73,7 +73,6 @@ function FitnessCompetition(props) {
     const showAdminPage = (event) => {
         var admin_priv = state.users.filter(user => user.user_id === 3).map(user => user.admin_priv)
         admin_priv = admin_priv.toString()
-        console.log(typeof admin_priv)
         if(admin_priv === "false"){
             alert("You do not have administrator privileges")
         }else{
@@ -111,9 +110,9 @@ function FitnessCompetition(props) {
 
     return (
         <div>
-            <header>
+            <h3>
                 FITNESS COMPETITIONS
-            </header>
+            </h3>
             <div>
                 <NavBar home={showHomePage} admin={showAdminPage} comp={showCompetitionPage} prize={showPrizePage}/>
             </div>
@@ -131,24 +130,3 @@ function FitnessCompetition(props) {
 }
 
 export default FitnessCompetition
-
-/*
-{state.page === "Home" ? <HomePage parent={state}/> : null}
-           <div>{state.userArr}</div>
-            <br></br>
-            <div>{state.prizeArr}</div>
-            <br></br>
-            <div>{state.competitionRawArr}</div>
-            <br></br>
-            <div>{state.competitionArr}</div>
-            <br></br>
-            <div>{state.competitorArr}</div>
-
-                           <div>You are logged in as: {state.userArr[0][0]}</div> 
-               <div>You have {state.userArr[0][1]} points</div> 
-               <div>You have administrative privileges: {state.userArr[0]}</div>
-
-               .map(competitionsRaw => [competitionsRaw.title, competitionsRaw.style, competitionsRaw.duration_length, competitionsRaw.duration_name, competitionsRaw.points]),
-               .map(competitions => [competitions.title, competitions.full_name, competitions.duration_length, competitions.duration_name, competitions.squadron]),
-
-*/

@@ -44,8 +44,8 @@ INSERT INTO users (full_name, email, admin_priv, squadron, base, points) VALUES 
 INSERT INTO users (full_name, email, admin_priv, squadron, base, points) VALUES ('Chuck Norris', 'karateking@yahoo.com', false, '56th Aircraft Maintenance Squadron', 'Luke', '17000');
 INSERT INTO users (full_name, email, admin_priv, squadron, base, points) VALUES ('Bob Ross', 'happylittleaccidents@hotmail.com', false, '56th Aircraft Maintenance Squadron', 'Luke', '101');
 
-INSERT INTO competitions (title, style, duration_length, duration_name, verified, points, num_completed_1, num_completed_2) VALUES ('Total miles ran', 'Team', '1', 'week', true, 40, 75, 90);
-INSERT INTO competitions (title, style, duration_length, duration_name, verified, points, num_completed_1, num_completed_2) VALUES ('Maximum push-ups', 'Individual', '1', 'day', false, 15, 317, 212);
+INSERT INTO competitions (title, style, duration_length, duration_name, verified, points, num_completed_1, num_completed_2) VALUES ('Total miles ran', 'Team', '1', 'Week(s)', true, 40, 75, 90);
+INSERT INTO competitions (title, style, duration_length, duration_name, verified, points, num_completed_1, num_completed_2) VALUES ('Maximum push-ups', 'Individual', '1', 'Day(s)', false, 15, 317, 212);
 
 INSERT INTO competitors (user_id, competition_id) VALUES (1, 1);
 INSERT INTO competitors (user_id, competition_id) VALUES (2, 1);

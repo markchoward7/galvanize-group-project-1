@@ -3,12 +3,9 @@ const axios = require('axios').default
 
 function SelectPrize(props){
 
-    console.log(props)
-
-    
     async function viewForm() {
         if(props.points > props.yourPoints){
-            alert("You do not have enough points to select this item!")
+            alert("You do not have enough points to select this prize!")
         }else{
             var newPoints = props.yourPoints -props.points
             const response = await axios.patch('/comp1/api/updatePoints', JSON.stringify({

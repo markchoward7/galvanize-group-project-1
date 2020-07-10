@@ -1,8 +1,6 @@
 import React from 'react';
 const axios = require('axios').default
 
-//things needed for a competition: id, title, style, duration_length, duration_time, verified, and points
-
 class AddTeam extends React.Component{
             constructor(props) {
                 super(props)
@@ -17,7 +15,6 @@ class AddTeam extends React.Component{
             sendTeam = (event) => {
                 event.preventDefault()
                 this.props.submit(this.state.team)
-                console.log("This team, initial submit: ", this.state.team)
                 alert("Team Submitted")
             }           
         
