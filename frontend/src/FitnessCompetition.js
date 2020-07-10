@@ -44,6 +44,7 @@ function FitnessCompetition(props) {
                 const competitions =  await axios.get('/comp1/api/competitions')
                 const competitors =  await axios.get('/comp1/api/competitors')
                 const userComps = await axios.get('/comp1/api/competitions/3')
+                
                  
                  setState({
                      ...state,
@@ -57,7 +58,6 @@ function FitnessCompetition(props) {
 
             }
             fetchData();
-            console.log("users: ", state.name)
         }
         
     }, [])
@@ -71,10 +71,17 @@ function FitnessCompetition(props) {
     }
 
     const showAdminPage = (event) => {
-        setState({
-            ...state,
-            page: "AdminPage"
-        })
+        var admin_priv = state.users.filter(user => user.user_id === 3).map(user => user.admin_priv)
+        admin_priv = admin_priv.toString()
+        console.log(typeof admin_priv)
+        if(admin_priv === "false"){
+            alert("You do not have administrator privileges")
+        }else{
+            setState({
+                ...state,
+                page: "AdminPage"
+            })
+        }
     }
 
     const showCompetitionPage = (event) => {

@@ -37,7 +37,7 @@ CREATE TABLE prizes (
 
 INSERT INTO users (full_name, email, admin_priv, squadron, base, points) VALUES ('Robin Olds', 'bamf@gmail.com', true, '69th Fighter Squadron', 'Luke', '420');
 INSERT INTO users (full_name, email, admin_priv, squadron, base, points) VALUES ('Billy Mitchell', 'luvplanes@hotmail.com', false, '69th Fighter Squadron', 'Luke', '718');
-INSERT INTO users (full_name, email, admin_priv, squadron, base, points) VALUES ('Dave Goldfein', 'csaf@gmail.com', false, '69th Fighter Squadron', 'Luke', '2020');
+INSERT INTO users (full_name, email, admin_priv, squadron, base, points) VALUES ('Dave Goldfein', 'csaf@gmail.com', true, '69th Fighter Squadron', 'Luke', '2020');
 
 INSERT INTO users (full_name, email, admin_priv, squadron, base, points) VALUES ('Kaleth Wright', 'ej@msn.com', true, '56th Aircraft Maintenance Squadron', 'Luke', '212');
 INSERT INTO users (full_name, email, admin_priv, squadron, base, points) VALUES ('JoAnne Bass', 'big_shoes@gmail.com', false, '56th Aircraft Maintenance Squadron', 'Luke', '78');
