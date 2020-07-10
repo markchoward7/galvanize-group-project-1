@@ -1,26 +1,33 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import MyForm from './MyForm'
+import Tester from './Tester'
+import {BrowserRouter as Router,Link,Switch,HashRouter, NavLink} from "react-router-dom"
+import Route from 'react-router-dom/Route'
+import CheckTest from './CheckTest'
+import Tester2 from './Tester2';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <h1>
-          Test Scheduler 
-        </h1>
-        <MyForm />
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <HashRouter>
+            <Switch>
+            <div className='App2'>
+            <ul>
+              <li>
+              <NavLink to="/home">HOME</NavLink>
+              </li>
+              <li>
+              <NavLink to="/checktest">When's your test?</NavLink>
+              </li>
+            </ul>
+            <div className = "content">
+              <Route exact path="/home" component={Tester}/>
+              <Route exact path="/checktest" component={CheckTest}/>
+              </div>
+            </div> 
+            </Switch>
+        </HashRouter>
     </div>
   );
 }

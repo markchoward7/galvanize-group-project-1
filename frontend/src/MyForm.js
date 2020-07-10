@@ -1,16 +1,14 @@
-import React from 'react'
+//import React from 'react';
+import React, {useState} from 'react';
+const axios = require('axios')
 
-class MyForm extends React.Component {
-  render() {
-    return (
-      //after the intial form tag put "action= ????" for the file that will receive the input
-      <form>
-        <p>Enter your name: <input type="text"/></p>
-        <p>Enter your age: <input type="number" maxlength="4" size="4"/></p>
 
-      </form>
-    );
-  }
+function MyForm () {
+ return (
+   axios.get('http://localhost:3001/testers')
+ )
 }
+
+
 
 export default MyForm
